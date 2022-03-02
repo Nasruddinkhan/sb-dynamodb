@@ -1,6 +1,7 @@
 package com.mypractice.dynamodb.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
@@ -21,12 +22,13 @@ public class GenericRepository<T> {
          return dynamoDBMapper.load(destination, id);
     }
 
-    public  void deleteById(String id,  Class<T> destination) {
+    public void deleteById(String id,  Class<T> destination) {
         dynamoDBMapper.delete(dynamoDBMapper.load(destination, id));
     }
 
     public  T updateById(String id, String attributeId, T destination) {
-       dynamoDBMapper.save(destination,
+
+        dynamoDBMapper.save(destination,
                 new DynamoDBSaveExpression()
                         .withExpectedEntry(attributeId,
                                 new ExpectedAttributeValue(
